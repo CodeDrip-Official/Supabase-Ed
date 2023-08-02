@@ -1,7 +1,6 @@
 package com.example.supabaseed.presentation.auth
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -56,7 +55,6 @@ fun AuthScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(2F)
-                .background(MaterialTheme.colorScheme.background)
         )
     }
 }
@@ -69,13 +67,13 @@ private fun AuthHeaderSection(modifier: Modifier = Modifier) {
         modifier = modifier,
     ) {
         Text(
-            text = "Welcome to SupabaseEd",
+            text = stringResource(id = R.string.welcome_title),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(ButtonDefaults.IconSpacing))
         Text(
-            text = "Sign In to your Account",
+            text = stringResource(id = R.string.signin_title),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.outline,
             modifier = Modifier.fillMaxWidth()

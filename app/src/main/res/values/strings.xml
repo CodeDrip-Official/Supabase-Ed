@@ -9,4 +9,6 @@
     <string name="or_lbl">or</string>
     <string name="cont_with_google">Continue with Google</string>
     <string name="cont_with_fb">Continue with Facebook</string>
+    <string name="welcome_title">Welcome to SupabaseEd</string>
+    <string name="signin_title">Sign In to your Account</string>
 </resources>
