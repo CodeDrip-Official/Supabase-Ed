@@ -83,7 +83,7 @@ private val DarkColors = darkColorScheme(
 @Composable
 fun SupabaseEdTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable() () -> Unit
 ) {
     val colorScheme = when {
@@ -105,6 +105,8 @@ fun SupabaseEdTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
+        typography = Typography,
+        shapes = Shapes,
         content = content
     )
 }
