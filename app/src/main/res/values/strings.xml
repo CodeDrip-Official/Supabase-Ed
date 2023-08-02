@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">SupabaseEd</string>
+    <string name="email_lbl">Email Address</string>
+    <string name="password_lbl">Password</string>
+    <string name="forgot_password_lbl">Forgot Password?</string>
+    <string name="login_lbl">Login</string>
+    <string name="no_account_lbl">Don\'t have an account?</string>
+    <string name="register_lbl">Register</string>
+    <string name="or_lbl">or</string>
+    <string name="cont_with_google">Continue with Google</string>
+    <string name="cont_with_fb">Continue with Facebook</string>
 </resources>
