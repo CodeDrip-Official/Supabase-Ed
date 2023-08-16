@@ -1,6 +1,5 @@
 package com.example.supabaseed.presentation.components
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,28 +18,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.supabaseed.R
-import com.stevdzasan.onetap.OneTapSignInWithGoogle
-import com.stevdzasan.onetap.rememberOneTapSignInState
 
 @Composable
 fun SocialLoginButtons(
-    googleClientKey: String,
-    signInWithGoogle: (String) -> Unit,
+    signInWithGoogle: () -> Unit,
     signInWithFacebook: () -> Unit,
 ) {
-    val state = rememberOneTapSignInState()
-    OneTapSignInWithGoogle(
-        state = state,
-        clientId = googleClientKey,
-        onTokenIdReceived = { tokenId ->
-            signInWithGoogle(tokenId)
-        },
-        onDialogDismissed = { message ->
-            Log.d("LOG", message)
-        }
-    )
     Button(
-        onClick = { state.open() },
+        onClick = { signInWithGoogle() },
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isSystemInDarkTheme()) Color.White else Color.Black,
             contentColor = if (isSystemInDarkTheme()) Color.Black else Color.White

@@ -1,9 +1,6 @@
-@file:OptIn(ExperimentalAnimationApi::class)
-
 package com.example.supabaseed.presentation.screens
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,29 +16,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import com.example.supabaseed.BuildConfig
 import com.example.supabaseed.R
-import com.example.supabaseed.presentation.AuthUiState
-import com.example.supabaseed.presentation.AuthViewModel
-import com.example.supabaseed.presentation.FieldType
-import com.example.supabaseed.presentation.components.*
+import com.example.supabaseed.presentation.components.AuthSwitcher
+import com.example.supabaseed.presentation.components.LoginForm
+import com.example.supabaseed.presentation.components.OtherLoginDivider
+import com.example.supabaseed.presentation.components.RegistrationForm
+import com.example.supabaseed.presentation.components.SocialLoginButtons
 
 @Composable
 fun AuthScreen(
-    authViewModel: AuthViewModel,
-    authUiState: AuthUiState,
     modifier: Modifier = Modifier,
 ) {
     Column(
         verticalArrangement = Arrangement.SpaceBetween, modifier = modifier
     ) {
         AuthHeaderSection(
-            isRegister = authUiState.isRegister, modifier = Modifier.fillMaxWidth()
+            isRegister = true, // TODO(Integrate with ViewModel)
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_xxxl)))
         AuthBodySection(
-            authUiState,
-            authViewModel,
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
@@ -78,8 +72,6 @@ private fun AuthHeaderSection(
 
 @Composable
 private fun AuthBodySection(
-    authUiState: AuthUiState,
-    authViewModel: AuthViewModel,
     modifier: Modifier = Modifier,
 ) {
 
@@ -90,66 +82,42 @@ private fun AuthBodySection(
         ),
         modifier = modifier
     ) {
-        AuthForm(
-            authUiState = authUiState,
-            authViewModel = authViewModel,
-        )
+        AuthForm()
         OtherLoginDivider()
         SocialLoginButtons(
-            googleClientKey = BuildConfig.GOOGLE_CLIENT_KEY,
-            signInWithGoogle = { authViewModel.signInWithGoogleTokenID(it) },
-            signInWithFacebook = { authViewModel.signInWithFacebook() },
+            signInWithGoogle = { },
+            signInWithFacebook = { },
         )
-        AuthSwitcher(
-            authUiState.isRegister
-        ) { authViewModel.updateIsRegOrLogin() }
+        AuthSwitcher(true) { }
 
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun AuthForm(
-    authUiState: AuthUiState,
-    authViewModel: AuthViewModel,
 ) {
     AnimatedContent(
-        targetState = authUiState.isRegister, label = "AuthFormContentAnim"
+        targetState = true, label = "AuthFormContentAnim"
     ) { isRegister ->
         when (isRegister) {
-            false -> LoginForm(authUiState = authUiState,
-                onEmailChanged = { authViewModel.updateAuthTextField(it, FieldType.EMAIL) },
-                onPasswordChanged = { authViewModel.updateAuthTextField(it, FieldType.PASSWORD) },
+            false -> LoginForm(
+                onEmailChanged = { },
+                onPasswordChanged = { },
                 onPasswordVisibilityChanged = {
-                    authViewModel.updatePasswordVisibility(
-                        isVisible = it,
-                        fieldType = FieldType.PASSWORD,
-                    )
                 },
-                onLoginClicked = { authViewModel.signInWithEmail() })
+                onLoginClicked = { })
 
 
-            true -> RegistrationForm(authUiState = authUiState,
-                onEmailChanged = { authViewModel.updateAuthTextField(it, FieldType.EMAIL) },
-                onPasswordChanged = { authViewModel.updateAuthTextField(it, FieldType.PASSWORD) },
+            true -> RegistrationForm(
+                onEmailChanged = { },
+                onPasswordChanged = { },
                 onPasswordVisibilityChanged = {
-                    authViewModel.updatePasswordVisibility(
-                        isVisible = it,
-                        fieldType = FieldType.PASSWORD,
-                    )
                 },
                 onConfirmPasswordChanged = {
-                    authViewModel.updateAuthTextField(
-                        it, FieldType.CONF_PASSWORD
-                    )
                 },
                 onConfirmPasswordVisibilityChanged = {
-                    authViewModel.updatePasswordVisibility(
-                        isVisible = it,
-                        fieldType = FieldType.CONF_PASSWORD,
-                    )
                 },
-                onRegClicked = { authViewModel.signUpWithEmail() })
+                onRegClicked = { })
         }
     }
 }
