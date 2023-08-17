@@ -27,11 +27,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import com.example.supabaseed.R
+import com.example.supabaseed.presentation.AuthUiState
 
 @Composable
 fun RegistrationForm(
+    authUiState: AuthUiState,
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onPasswordVisibilityChanged: (Boolean) -> Unit,
@@ -41,52 +44,63 @@ fun RegistrationForm(
 ) {
     Column {
         OutlinedTextField(
-            value = "",
+            value = authUiState.email.fieldValue,
             onValueChange = { onEmailChanged(it) },
             leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
             label = { Text(text = stringResource(id = R.string.email_lbl)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier.fillMaxWidth(),
-            isError = false,
-            supportingText = null,
-        )
+            isError = !authUiState.email.isFieldValid,
+            supportingText = if (!authUiState.email.isFieldValid) {
+                { Text(text = authUiState.email.errorMessage) }
+            } else {
+                null
+            })
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_xl)))
         OutlinedTextField(
-            value = "",
+            value = authUiState.password.fieldValue,
             onValueChange = { onPasswordChanged(it) },
             leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
             trailingIcon = {
-                IconButton(onClick = { onPasswordVisibilityChanged(false) }) {
+                IconButton(onClick = { onPasswordVisibilityChanged(!authUiState.password.passwordVisible) }) {
                     Icon(
-                        painter = painterResource(id =  R.drawable.ic_visible ),
+                        painter = painterResource(id = if (authUiState.password.passwordVisible) R.drawable.ic_visibility_off else R.drawable.ic_visible),
                         contentDescription = null
                     )
                 }
             },
             label = { Text(text = stringResource(id = R.string.password_lbl)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            visualTransformation = PasswordVisualTransformation(),
-            isError = false,
-            supportingText = null,
+            visualTransformation = if (authUiState.password.passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            isError = !authUiState.password.isFieldValid,
+            supportingText = if (!authUiState.password.isFieldValid) {
+                { Text(text = authUiState.password.errorMessage) }
+            } else {
+                null
+            },
             modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_xl)))
         OutlinedTextField(
-            value = "",
+            value = authUiState.confirmPassword.fieldValue,
             onValueChange = { onConfirmPasswordChanged(it) },
             leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
             trailingIcon = {
-                IconButton(onClick = { onConfirmPasswordVisibilityChanged(false) }) {
+                IconButton(onClick = { onConfirmPasswordVisibilityChanged(!authUiState.confirmPassword.passwordVisible) }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_visible ),
+                        painter = painterResource(id = if (authUiState.confirmPassword.passwordVisible) R.drawable.ic_visibility_off else R.drawable.ic_visible),
                         contentDescription = null
                     )
                 }
             },
             label = { Text(text = stringResource(id = R.string.conf_password_lbl)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            visualTransformation = PasswordVisualTransformation(),
-            isError = false,
-            supportingText = null,
+            visualTransformation = if (authUiState.confirmPassword.passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            isError = !authUiState.confirmPassword.isFieldValid,
+            supportingText = if (!authUiState.confirmPassword.isFieldValid) {
+                { Text(text = authUiState.confirmPassword.errorMessage) }
+            } else {
+                null
+            },
             modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_sm)))
         Row(
