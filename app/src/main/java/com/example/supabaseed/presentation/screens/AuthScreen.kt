@@ -1,9 +1,6 @@
-@file:OptIn(ExperimentalAnimationApi::class)
-
 package com.example.supabaseed.presentation.screens
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +20,11 @@ import com.example.supabaseed.R
 import com.example.supabaseed.presentation.AuthUiState
 import com.example.supabaseed.presentation.AuthViewModel
 import com.example.supabaseed.presentation.FieldType
-import com.example.supabaseed.presentation.components.*
+import com.example.supabaseed.presentation.components.AuthSwitcher
+import com.example.supabaseed.presentation.components.LoginForm
+import com.example.supabaseed.presentation.components.OtherLoginDivider
+import com.example.supabaseed.presentation.components.RegistrationForm
+import com.example.supabaseed.presentation.components.SocialLoginButtons
 
 @Composable
 fun AuthScreen(
